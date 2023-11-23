@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { over } from 'stompjs';
 import SockJS from 'sockjs-client';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 var stompClient = null;
 
@@ -20,7 +21,7 @@ const ChatRoom = () => {
     }, [userData]);
 
     const connect = () => {
-        let Sock = new SockJS("");
+        let Sock = new SockJS("http://localhost:8080/ws");
         stompClient = over(Sock);
         stompClient.connect({}, onConnected, onError);
     }
@@ -163,6 +164,11 @@ const ChatRoom = () => {
                 </div>
                 :
                 <div className="register">
+                    <div width="30%" height="30%" class="bg-info rounded-circle">
+                        <span>
+                        <FontAwesomeIcon icon="fa-solid fa-user" />
+                        </span>
+                    </div>
                     <input
                         id="user-name"
                         placeholder="Enter your name"
@@ -170,11 +176,12 @@ const ChatRoom = () => {
                         value={userData.username}
                         onChange={handleUsername}
                         margin="normal"
+                        className='form-control'
                     />
-                    <button type="button" onClick={registerUser}>
+                    <button type="button" className='btn btn-primary' onClick={registerUser}>
                         connect
                     </button>
-                </div>}    
+                </div>}
         </div>
     )
 }
